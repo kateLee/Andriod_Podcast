@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Podcast</string>
+    <string name="cast_image">Cast image</string>
+    <string name="cast_list_title">Casts</string>
+</resources>
