@@ -7,4 +7,5 @@ package com.katelee.podcast.network
 class Repository {
     private val apiService = RetrofitClient.retrofit.create(CastService::class.java)
     suspend fun getCasts() = apiService.getCasts()
+    suspend fun getCastDetail() = apiService.getCastDetail()
 }

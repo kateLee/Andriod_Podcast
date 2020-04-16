@@ -20,7 +20,12 @@
 
 
     <style name="GrayText.small">
-        <item name="android:textSize">@dimen/text_primary</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+
+    <style name="WhiteText.small">
+        <item name="android:textSize">@dimen/text_small</item>
     </style>
 
 </resources>

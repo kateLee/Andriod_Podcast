@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.katelee.podcast.databinding.ItemCastBinding
 
-
 /**
  * Created by Kate on 2020-04-15.
  */
@@ -31,7 +30,9 @@ class CastAdapter(private var castList: ArrayList<Cast>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cast = castList[position]
         holder.bind(cast)
-//        holder.itemView.setOnClickListener(View.OnClickListener {  })
+        holder.itemView.setOnClickListener {
+            it.context.startActivity(CastDetailActivity.getStartIntent(it.context, cast.id))
+        }
     }
 
     class ViewHolder(private val binding: ItemCastBinding) : RecyclerView.ViewHolder(binding.root) {

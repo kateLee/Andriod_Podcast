@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.katelee.podcast.model.CastDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".CastDetailActivity">
+
+        <ImageView
+            android:id="@+id/cast_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/cast_image"
+            android:layout_marginLeft="@dimen/padding8"
+            android:layout_marginRight="@dimen/padding8"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cast_title"
+            app:imageUrl="@{viewModel.castDetail.artworkUrlThumbnail}" />
+        <TextView
+            android:id="@+id/cast_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/WhiteText"
+            android:text="@{viewModel.castDetail.name}"
+            android:paddingLeft="@dimen/padding16"
+            android:paddingRight="@dimen/padding16"
+            android:maxLines="2"
+            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintLeft_toRightOf="@id/cast_image"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/cast_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin16"
+            style="@style/GrayText.small"
+            android:lines="3"
+            android:text="@{viewModel.castDetail.artistName}"
+            android:paddingLeft="@dimen/padding16"
+            android:paddingRight="@dimen/padding16"
+            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintLeft_toLeftOf="@id/cast_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cast_title" />
+
+        <TextView
+            android:id="@+id/episodes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin16"
+            app:layout_constraintLeft_toLeftOf="@id/cast_image"
+            app:layout_constraintTop_toBottomOf="@id/cast_image"
+            style="@style/WhiteText.small"
+            android:text="@string/episodes" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contentFeedList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/episodes"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_cast"
+            app:contentFeeds="@{viewModel.castDetail.contentFeed}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

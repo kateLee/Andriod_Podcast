@@ -1,5 +1,6 @@
 package com.katelee.podcast.network
 
+import com.katelee.podcast.model.CastDetailResponse
 import com.katelee.podcast.model.CastsResponse
 import retrofit2.http.GET
 
@@ -10,4 +11,7 @@ import retrofit2.http.GET
 interface CastService {
     @GET("getcasts")
     suspend fun getCasts(): CastsResponse
+
+    @GET("getcastdetail")
+    suspend fun getCastDetail(): CastDetailResponse
 }
