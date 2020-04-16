@@ -44,15 +44,15 @@ class CastDetailActivity : AppCompatActivity() {
     }
 }
 
-@BindingAdapter("contentFeeds")
-fun bindRecyclerViewWithItemList(recyclerView: RecyclerView, itemList: ArrayList<CastDetail.ContentFeed>?) {
+@BindingAdapter(value = ["contentFeeds", "artworkUrl"])
+fun bindRecyclerViewWithItemList(recyclerView: RecyclerView, itemList: ArrayList<CastDetail.ContentFeed>?, artworkUrl: String?) {
     itemList?.let {
         if (recyclerView.adapter == null) {
-            recyclerView.adapter = ContentFeedsAdapter(it)
+            recyclerView.adapter = ContentFeedsAdapter(it, artworkUrl)
         } else {
             recyclerView.adapter?.apply {
                 when (this) {
-                    is ContentFeedsAdapter -> setContentFeedList(it)
+                    is ContentFeedsAdapter -> setContentFeedList(it).setArtworkUrl(artworkUrl)
                 }
             }
         }

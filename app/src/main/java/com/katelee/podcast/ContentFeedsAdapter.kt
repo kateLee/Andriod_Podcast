@@ -8,7 +8,7 @@ import com.katelee.podcast.databinding.ItemContentFeedBinding
 import com.katelee.podcast.model.CastDetail
 import java.util.ArrayList
 
-class ContentFeedsAdapter(private var it: ArrayList<CastDetail.ContentFeed>) : RecyclerView.Adapter<ContentFeedsAdapter.ViewHolder>() {
+class ContentFeedsAdapter(private var list: ArrayList<CastDetail.ContentFeed>, private var artworkUrl: String?) : RecyclerView.Adapter<ContentFeedsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val listItemBinding: ItemContentFeedBinding = DataBindingUtil.inflate(
@@ -19,15 +19,15 @@ class ContentFeedsAdapter(private var it: ArrayList<CastDetail.ContentFeed>) : R
     }
 
     override fun getItemCount(): Int {
-        return it.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = it[position]
+        val item = list[position]
         holder.bind(item)
-//        holder.itemView.setOnClickListener {
-//            it.context.startActivity(PlayerActivity.getStartIntent(it.context, item.url))
-//        }
+        holder.itemView.setOnClickListener {
+            it.context.startActivity(PlayerActivity.getStartIntent(it.context, item.url, artworkUrl, item.title))
+        }
     }
 
     class ViewHolder(private val binding: ItemContentFeedBinding) :
@@ -38,8 +38,14 @@ class ContentFeedsAdapter(private var it: ArrayList<CastDetail.ContentFeed>) : R
         }
     }
 
-    fun setContentFeedList(it: ArrayList<CastDetail.ContentFeed>) {
-        this.it = it
+    fun setContentFeedList (it: ArrayList<CastDetail.ContentFeed>): ContentFeedsAdapter {
+        this.list = it
         notifyDataSetChanged()
+        return this
     }
+
+    fun setArtworkUrl(it: String?) {
+        this.artworkUrl = it
+    }
+
 }

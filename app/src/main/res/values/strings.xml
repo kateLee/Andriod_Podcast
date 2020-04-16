@@ -4,4 +4,7 @@
     <string name="cast_list_title">Casts</string>
     <string name="player_image">Player image</string>
     <string name="episodes">ALL EPISODES</string>
+    <string name="button_start">Start</string>
+    <string name="button_next">Next 30 sec</string>
+    <string name="button_previous">Back 30 sec</string>
 </resources>
