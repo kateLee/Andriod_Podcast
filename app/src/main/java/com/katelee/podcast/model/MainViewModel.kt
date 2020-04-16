@@ -1,4 +1,4 @@
-package com.katelee.podcast.data.model
+package com.katelee.podcast.model
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

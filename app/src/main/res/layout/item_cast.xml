@@ -5,7 +5,7 @@
     <data>
         <variable
             name="cast"
-            type="com.katelee.podcast.data.model.Cast" />
+            type="com.katelee.podcast.model.Cast" />
     </data>
 
     <LinearLayout

@@ -1,4 +1,4 @@
-package com.katelee.podcast.data.model
+package com.katelee.podcast.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

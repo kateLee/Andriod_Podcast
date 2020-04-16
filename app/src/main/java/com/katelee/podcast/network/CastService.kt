@@ -1,9 +1,7 @@
 package com.katelee.podcast.network
 
-import com.katelee.podcast.data.model.CastsResponse
+import com.katelee.podcast.model.CastsResponse
 import retrofit2.http.GET
-
-
 
 /**
  * Created by Kate on 2020-04-15.

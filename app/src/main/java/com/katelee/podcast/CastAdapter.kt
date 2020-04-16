@@ -2,7 +2,7 @@ package com.katelee.podcast
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.katelee.podcast.data.model.Cast
+import com.katelee.podcast.model.Cast
 import android.view.LayoutInflater
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

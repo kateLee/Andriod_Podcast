@@ -6,8 +6,8 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.katelee.podcast.data.model.Cast
-import com.katelee.podcast.data.model.MainViewModel
+import com.katelee.podcast.model.Cast
+import com.katelee.podcast.model.MainViewModel
 import com.katelee.podcast.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.katelee.podcast.data.model.MainViewModel" />
+            type="com.katelee.podcast.model.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
