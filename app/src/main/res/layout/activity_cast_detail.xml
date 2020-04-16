@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
+
         <variable
             name="viewModel"
             type="com.katelee.podcast.model.CastDetailViewModel" />
@@ -60,10 +62,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin16"
-            app:layout_constraintLeft_toLeftOf="@id/cast_image"
-            app:layout_constraintTop_toBottomOf="@id/cast_image"
+            android:visibility="@{!viewModel.isLoading ? View.VISIBLE : View.GONE}"
             style="@style/WhiteText.small"
-            android:text="@string/episodes" />
+            android:text="@string/episodes"
+            app:layout_constraintLeft_toLeftOf="@id/cast_image"
+            app:layout_constraintTop_toBottomOf="@id/cast_image" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contentFeedList"
@@ -74,6 +77,17 @@
             tools:itemCount="5"
             tools:listitem="@layout/item_cast"
             app:contentFeeds="@{viewModel.castDetail.contentFeed}" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleLarge"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
