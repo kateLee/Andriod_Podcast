@@ -22,8 +22,8 @@ import com.katelee.podcast.model.PlayerViewModel
 class PlayerActivity : AppCompatActivity() {
     var mediaPlayer : MediaPlayer? = null
     lateinit var binding: ActivityPlayerBinding
-    val handler = Handler()
-    var runnable: Runnable? = null
+    private val handler = Handler()
+    private var runnable: Runnable? = null
 
     companion object {
         private const val EXTRA_MEDIA_URL = "EXTRA_MEDIA_URL"
@@ -127,7 +127,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun formatTime(mills: Int): String {
-        return "${String.format("%02d", mills/1000/60)}:${kotlin.String.format("%02d", mills/1000%60)}"
+        return "${String.format("%02d", mills/1000/60)}:${String.format("%02d", mills/1000%60)}"
     }
 
     override fun onStop() {
@@ -137,7 +137,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        mediaPlayer!!.release()
+        mediaPlayer?.release()
         mediaPlayer = null
         super.onDestroy()
     }
