@@ -1,7 +1,7 @@
 Android Podcast Sample
 ===================================  
 
-## Requirement
+## Software requirements specification
 
 1. Kotlin
 2. MVVM
