@@ -11,7 +11,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding8"
+        android:paddingLeft="@dimen/padding8"
+        android:paddingRight="@dimen/padding8"
+        android:paddingBottom="@dimen/padding8"
         android:orientation="vertical">
 
         <ImageView
@@ -25,14 +27,14 @@
             android:id="@+id/cast_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
             style="@style/WhiteText"
             android:text="@{cast.artistName}" />
         <TextView
             android:id="@+id/cast_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
             style="@style/GrayText.small"
             android:lines="3"
             android:text="@{cast.name}" />

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="padding8">8dp</dimen>
-    <dimen name="padding16">16dp</dimen>
-
-    <dimen name="margin16">16dp</dimen>
 
     <dimen name="text_primary">16sp</dimen>
     <dimen name="text_small">12sp</dimen>
+    <dimen name="text_big">20sp</dimen>
+
+    <dimen name="padding8">8dp</dimen>
+    <dimen name="padding16">16dp</dimen>
+    <dimen name="margin8">8dp</dimen>
+    <dimen name="margin16">16dp</dimen>
+    <dimen name="margin32">32dp</dimen>
 </resources>

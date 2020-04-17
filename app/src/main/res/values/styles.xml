@@ -28,4 +28,9 @@
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
+
+    <style name="WhiteText.Big">
+        <item name="android:textSize">@dimen/text_big</item>
+    </style>
+
 </resources>

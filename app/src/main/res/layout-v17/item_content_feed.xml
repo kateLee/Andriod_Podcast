@@ -10,7 +10,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding8" >
+        android:paddingLeft="@dimen/padding8"
+        android:paddingRight="@dimen/padding8"
+        android:paddingBottom="@dimen/padding8" >
 
         <ImageView
             android:id="@+id/player"

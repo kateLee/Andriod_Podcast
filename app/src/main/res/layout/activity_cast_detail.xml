@@ -33,7 +33,7 @@
             android:id="@+id/cast_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/WhiteText"
+            style="@style/WhiteText.Big"
             android:text="@{viewModel.castDetail.name}"
             android:paddingLeft="@dimen/padding16"
             android:paddingRight="@dimen/padding16"
@@ -41,7 +41,8 @@
             app:layout_constraintHorizontal_weight="3"
             app:layout_constraintLeft_toRightOf="@id/cast_image"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/cast_image"
+            app:layout_constraintBottom_toBottomOf="@id/cast_image" />
         <TextView
             android:id="@+id/cast_content"
             android:layout_width="0dp"
@@ -61,17 +62,18 @@
             android:id="@+id/episodes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin32"
             android:visibility="@{!viewModel.isLoading ? View.VISIBLE : View.GONE}"
             style="@style/WhiteText.small"
             android:text="@string/episodes"
             app:layout_constraintLeft_toLeftOf="@id/cast_image"
-            app:layout_constraintTop_toBottomOf="@id/cast_image" />
+            app:layout_constraintBottom_toBottomOf="@id/cast_image" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contentFeedList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin32"
             app:layout_constraintTop_toBottomOf="@id/episodes"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="5"
