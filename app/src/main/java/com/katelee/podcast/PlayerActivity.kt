@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -76,6 +77,16 @@ class PlayerActivity : AppCompatActivity() {
             binding.previous.isEnabled = true
             binding.next.isEnabled = true
         }
+        mediaPlayer!!.setOnCompletionListener {
+            AlertDialog.Builder(this)
+                .setMessage(R.string.message_media_complete)
+                .setPositiveButton(R.string.replay) {  _, _ ->
+                    mediaPlayer!!.seekTo(0)
+                    mediaPlayer!!.start()
+                }
+                .setNegativeButton(R.string.finish) { _, _ -> finish() }
+                .show()
+        }
         binding.progressSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
@@ -103,7 +114,6 @@ class PlayerActivity : AppCompatActivity() {
         }
         binding.next.setOnClickListener {
             mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition + 30 * 1000)
-            if (!mediaPlayer!!.isPlaying && binding.start.isSelected) mediaPlayer!!.start()
         }
     }
 
