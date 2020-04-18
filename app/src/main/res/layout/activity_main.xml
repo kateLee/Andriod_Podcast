@@ -16,15 +16,25 @@
         android:background="@color/black"
         tools:context=".MainActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/castList"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_cast"
-            app:items="@{viewModel.castList}" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:isRefreshing="@{viewModel.isRefreshing}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/castList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_cast"
+                app:castItems="@{viewModel.castList}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"

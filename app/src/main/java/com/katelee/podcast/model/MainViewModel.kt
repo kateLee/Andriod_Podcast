@@ -12,6 +12,7 @@ class MainViewModel: BaseViewModel() {
     private val repository = Repository()
     val castList: MutableLiveData<ArrayList<Cast>> = MutableLiveData()
     var isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    var isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
 
     fun fetchCasts() = request (
         onError = {
@@ -24,6 +25,20 @@ class MainViewModel: BaseViewModel() {
             isLoading.postValue( true)
             castList.postValue(repository.getCasts().data?.podcast)
             isLoading.postValue( false)
+        }
+    )
+
+    fun refreshCasts() = request (
+        onError = {
+            // handle error
+//            todo alert
+            isRefreshing.value = false
+            Log.e("@v@MainViewModel", it.message)
+        },
+        execute = {
+            isRefreshing.postValue( true)
+            castList.postValue(repository.getCasts().data?.podcast)
+            isRefreshing.postValue( false)
         }
     )
 }

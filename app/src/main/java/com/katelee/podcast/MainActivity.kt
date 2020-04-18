@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.katelee.podcast.model.Cast
 import com.katelee.podcast.model.MainViewModel
 import com.katelee.podcast.databinding.ActivityMainBinding
@@ -20,11 +21,12 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.fetchCasts()
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.refreshCasts() }
     }
 }
 
-@BindingAdapter("items")
-fun bindRecyclerViewWithItemList(recyclerView: RecyclerView, itemList: ArrayList<Cast>?) {
+@BindingAdapter("castItems")
+fun bindRecyclerViewWithCastItemList(recyclerView: RecyclerView, itemList: ArrayList<Cast>?) {
     itemList?.let {
         if (recyclerView.adapter == null) {
             recyclerView.adapter = CastAdapter(it)
@@ -36,4 +38,9 @@ fun bindRecyclerViewWithItemList(recyclerView: RecyclerView, itemList: ArrayList
             }
         }
     }
+}
+
+@BindingAdapter("isRefreshing")
+fun isRefreshing(swipeRefreshLayout: SwipeRefreshLayout, isLoading: Boolean) {
+    if (!isLoading) swipeRefreshLayout.isRefreshing = false
 }
