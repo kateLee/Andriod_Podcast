@@ -10,6 +10,13 @@ Android Podcast Sample
 5. Dependency injection
 6. Supporting Multiple Screens
 
+### Demo
+![loading](https://raw.githubusercontent.com/kateLee/Andriod_Podcast/master/images/loading.png)
+![cast list](https://raw.githubusercontent.com/kateLee/Andriod_Podcast/master/images/cast_list.png)
+![cast detail](https://raw.githubusercontent.com/kateLee/Andriod_Podcast/master/images/cast_detail.png)
+![media player](https://raw.githubusercontent.com/kateLee/Andriod_Podcast/master/images/media_player.png)
+![media player complete](https://raw.githubusercontent.com/kateLee/Andriod_Podcast/master/images/media_player_complete.png)
+
 ## API
 
 1. Cast 清單列表：http://demo4491005.mockable.io/getcasts
