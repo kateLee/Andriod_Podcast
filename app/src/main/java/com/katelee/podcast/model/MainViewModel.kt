@@ -1,6 +1,5 @@
 package com.katelee.podcast.model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.katelee.podcast.network.Repository
 
@@ -13,13 +12,12 @@ class MainViewModel: BaseViewModel() {
     val castList: MutableLiveData<ArrayList<Cast>> = MutableLiveData()
     var isLoading: MutableLiveData<Boolean> = MutableLiveData()
     var isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
+    var requestError: MutableLiveData<String> = MutableLiveData()
 
     fun fetchCasts() = request (
         onError = {
-            // handle error
-//            todo alert
-            isLoading.value = false
-            Log.e("@v@MainViewModel", it.message)
+            isLoading.postValue(false)
+            requestError.postValue(it.message)
         },
         execute = {
             isLoading.postValue( true)
@@ -30,10 +28,8 @@ class MainViewModel: BaseViewModel() {
 
     fun refreshCasts() = request (
         onError = {
-            // handle error
-//            todo alert
-            isRefreshing.value = false
-            Log.e("@v@MainViewModel", it.message)
+            isRefreshing.postValue( false)
+            requestError.postValue(it.message)
         },
         execute = {
             isRefreshing.postValue( true)

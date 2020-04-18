@@ -3,10 +3,12 @@ package com.katelee.podcast
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.katelee.podcast.databinding.ActivityCastDetailBinding
@@ -41,6 +43,14 @@ class CastDetailActivity : AppCompatActivity() {
         itemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.diveder)!!)
 
         binding.contentFeedList.addItemDecoration(itemDecoration)
+
+        viewModel.requestError.observe(this, Observer<String> {
+            AlertDialog.Builder(this)
+                .setMessage(it)
+                .setPositiveButton(R.string.retry) { _, _ -> viewModel.fetchCastDetail() }
+                .setNegativeButton(R.string.finish) { _, _ -> finish() }
+                .show()
+        })
     }
 }
 

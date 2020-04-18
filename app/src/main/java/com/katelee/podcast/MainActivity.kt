@@ -10,6 +10,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.katelee.podcast.model.Cast
 import com.katelee.podcast.model.MainViewModel
 import com.katelee.podcast.databinding.ActivityMainBinding
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +24,14 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         viewModel.fetchCasts()
         binding.swipeRefreshLayout.setOnRefreshListener { viewModel.refreshCasts() }
+
+        viewModel.requestError.observe(this, Observer<String> {
+            AlertDialog.Builder(this)
+                .setMessage(it)
+                .setPositiveButton(R.string.retry) { _, _ -> viewModel.fetchCasts() }
+                .setNegativeButton(R.string.finish) { _, _ -> finish() }
+                .show()
+        })
     }
 }
 

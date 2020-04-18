@@ -10,4 +10,5 @@
     <string name="message_media_complete">End of play</string>
     <string name="replay">Replay</string>
     <string name="finish">Finish</string>
+    <string name="retry">Retry</string>
 </resources>
