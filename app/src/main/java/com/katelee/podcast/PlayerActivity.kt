@@ -5,12 +5,13 @@ import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.katelee.podcast.databinding.ActivityPlayerBinding
 import com.katelee.podcast.model.PlayerViewModel
@@ -22,8 +23,7 @@ import com.katelee.podcast.model.PlayerViewModel
 class PlayerActivity : AppCompatActivity() {
     var mediaPlayer : MediaPlayer? = null
     lateinit var binding: ActivityPlayerBinding
-    private val handler = Handler()
-    private var runnable: Runnable? = null
+    lateinit var viewModel: PlayerViewModel
 
     companion object {
         private const val EXTRA_MEDIA_URL = "EXTRA_MEDIA_URL"
@@ -53,14 +53,17 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_player)
-        val viewModel = ViewModelProvider(this).get(PlayerViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(PlayerViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         viewModel.artworkUrl = extras.getString(EXTRA_ARTWORK_URL, "")
         viewModel.mediaName = extras.getString(EXTRA_NAME, "")
-        binding.start.isEnabled = false
-        binding.previous.isEnabled = false
-        binding.next.isEnabled = false
+
+        viewModel.timeUpdate.observe(this, Observer<Boolean> {
+            viewModel.timeNow.postValue(mediaPlayer!!.currentPosition)
+            viewModel.timerStart()
+        })
 
         mediaPlayer = MediaPlayer().apply {
             setAudioStreamType(AudioManager.STREAM_MUSIC)
@@ -68,14 +71,10 @@ class PlayerActivity : AppCompatActivity() {
             prepareAsync() // might take long! (for buffering, etc)
         }
         mediaPlayer!!.setOnPreparedListener {
-            binding.progressBar.visibility = View.GONE
-            binding.timeEnd.text = formatTime(mediaPlayer!!.duration)
-            binding.timeNow.text = formatTime(0)
-            binding.progressSeekBar.max = mediaPlayer!!.duration
-            binding.start.isEnabled = true
+            viewModel.isPrepared.value = true
+            viewModel.duration.value = mediaPlayer!!.duration
+
             binding.start.performClick()
-            binding.previous.isEnabled = true
-            binding.next.isEnabled = true
         }
         mediaPlayer!!.setOnCompletionListener {
             AlertDialog.Builder(this)
@@ -89,24 +88,20 @@ class PlayerActivity : AppCompatActivity() {
         }
         binding.progressSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    mediaPlayer!!.seekTo(progress)
-                    binding.timeNow.text = formatTime(progress)
-                }
+                if (fromUser) { mediaPlayer!!.seekTo(progress) }
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
         binding.start.setOnClickListener {
             if (!mediaPlayer!!.isPlaying) {
-                mediaPlayer!!.start()
                 binding.start.isSelected = true
-                asyncProgressBar()
+                viewModel.timerStart()
+                mediaPlayer!!.start()
             } else {
-                mediaPlayer!!.pause()
                 binding.start.isSelected = false
-                handler.removeCallbacks(runnable)
-                runnable = null
+                viewModel.timerEnd()
+                mediaPlayer!!.pause()
             }
         }
         binding.previous.setOnClickListener {
@@ -117,28 +112,15 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun asyncProgressBar() {
-        runnable = Runnable {
-            binding.progressSeekBar.progress = mediaPlayer!!.getCurrentPosition()
-            binding.timeNow.text = formatTime(mediaPlayer!!.getCurrentPosition())
-            handler.postDelayed(runnable, 500)
-        }
-        runnable!!.run()
-    }
-
-    private fun formatTime(mills: Int): String {
-        return "${String.format("%02d", mills/1000/60)}:${String.format("%02d", mills/1000%60)}"
-    }
-
     override fun onStop() {
-        handler.removeCallbacks(runnable)
-        runnable = null
         super.onStop()
-    }
-
-    override fun onDestroy() {
+        viewModel.timerEnd()
         mediaPlayer?.release()
         mediaPlayer = null
-        super.onDestroy()
     }
+}
+
+@BindingAdapter("enable")
+fun setViewEnabled(view: View, enable: Boolean) {
+    view.isEnabled = enable
 }

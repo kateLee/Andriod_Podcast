@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="com.katelee.podcast.MyStringUtils"/>
+        <import type="android.view.View"/>
+
         <variable
             name="viewModel"
             type="com.katelee.podcast.model.PlayerViewModel" />
@@ -32,6 +35,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin16"
+            android:max="@{viewModel.duration}"
+            android:progress="@{viewModel.timeNow}"
             app:layout_constraintTop_toBottomOf="@id/cast_image"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -42,12 +47,14 @@
             android:layout_height="wrap_content"
             style="@style/GrayText.small"
             android:layout_marginTop="@dimen/margin16"
+            android:text="@{MyStringUtils.formatTime(viewModel.timeNow)}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/progressSeekBar" />
         <TextView
             android:id="@+id/timeEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{MyStringUtils.formatTime(viewModel.duration)}"
             style="@style/GrayText.small"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/timeNow" />
@@ -69,6 +76,7 @@
             android:src="@drawable/ic_media"
             android:contentDescription="@string/button_start"
             android:layout_marginBottom="@dimen/margin16"
+            app:enable="@{viewModel.isPrepared}"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -79,6 +87,7 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_media_rew"
             android:contentDescription="@string/button_previous"
+            app:enable="@{viewModel.isPrepared}"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/start"
@@ -89,6 +98,7 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_media_ff"
             android:contentDescription="@string/button_next"
+            app:enable="@{viewModel.isPrepared}"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toRightOf="@id/start"
             app:layout_constraintRight_toRightOf="parent"
@@ -99,6 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/progressBarStyleLarge"
+            android:visibility="@{!viewModel.isPrepared ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
