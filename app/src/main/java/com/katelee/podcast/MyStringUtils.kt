@@ -6,5 +6,5 @@ package com.katelee.podcast
 
 object MyStringUtils {
     @JvmStatic
-    fun formatTime(mills: Int) = String.format("%02d:%02d", mills/1000/60, mills/1000%60)
+    fun formatTime(mills: Int) = "%02d:%02d".format(mills / 1000 / 60, mills / 1000 % 60)
 }
