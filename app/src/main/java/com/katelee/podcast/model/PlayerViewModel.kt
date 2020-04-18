@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 class PlayerViewModel: BaseViewModel() {
     var artworkUrl: String = ""
     var mediaName: String = ""
+    var mediaUrl: String = ""
     var timerIsGoing = false
     var isPrepared: MutableLiveData<Boolean> = MutableLiveData()
     var timeUpdate: MutableLiveData<Boolean> = MutableLiveData()

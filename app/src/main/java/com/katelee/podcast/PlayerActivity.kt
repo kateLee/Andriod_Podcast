@@ -59,15 +59,46 @@ class PlayerActivity : AppCompatActivity() {
 
         viewModel.artworkUrl = extras.getString(EXTRA_ARTWORK_URL, "")
         viewModel.mediaName = extras.getString(EXTRA_NAME, "")
+        viewModel.mediaUrl = mediaUrl
 
         viewModel.timeUpdate.observe(this, Observer<Boolean> {
             viewModel.timeNow.postValue(mediaPlayer!!.currentPosition)
             viewModel.timerStart()
         })
+        binding.progressSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) { mediaPlayer!!.seekTo(progress) }
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+        binding.start.setOnClickListener {
+            if (!mediaPlayer!!.isPlaying) {
+                binding.start.isSelected = true
+                viewModel.timerStart()
+                mediaPlayer!!.seekTo(viewModel.timeNow.value ?: 0)
+                mediaPlayer!!.start()
+            } else {
+                binding.start.isSelected = false
+                viewModel.timerEnd()
+                mediaPlayer!!.pause()
+            }
+        }
+        binding.previous.setOnClickListener {
+            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition - 30 * 1000)
+        }
+        binding.next.setOnClickListener {
+            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition + 30 * 1000)
+        }
+    }
 
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.isPrepared.value = false
         mediaPlayer = MediaPlayer().apply {
             setAudioStreamType(AudioManager.STREAM_MUSIC)
-            setDataSource(mediaUrl)
+            setDataSource(viewModel.mediaUrl)
             prepareAsync() // might take long! (for buffering, etc)
         }
         mediaPlayer!!.setOnPreparedListener {
@@ -85,30 +116,6 @@ class PlayerActivity : AppCompatActivity() {
                 }
                 .setNegativeButton(R.string.finish) { _, _ -> finish() }
                 .show()
-        }
-        binding.progressSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) { mediaPlayer!!.seekTo(progress) }
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
-        binding.start.setOnClickListener {
-            if (!mediaPlayer!!.isPlaying) {
-                binding.start.isSelected = true
-                viewModel.timerStart()
-                mediaPlayer!!.start()
-            } else {
-                binding.start.isSelected = false
-                viewModel.timerEnd()
-                mediaPlayer!!.pause()
-            }
-        }
-        binding.previous.setOnClickListener {
-            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition - 30 * 1000)
-        }
-        binding.next.setOnClickListener {
-            mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition + 30 * 1000)
         }
     }
 
