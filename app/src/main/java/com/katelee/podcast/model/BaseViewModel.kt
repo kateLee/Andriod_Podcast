@@ -14,7 +14,7 @@ open class BaseViewModel : ViewModel() {
         execute: suspend CoroutineScope.() -> T
     ) {
         viewModelScope.launch(errorHandler { onError.invoke(it) }) {
-            launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
                 execute()
             }
         }
